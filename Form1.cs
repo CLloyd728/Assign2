@@ -693,7 +693,7 @@ namespace Assignment2
                 listBox1.Items.Add(String.Format("{0:000000}  {1} [{2}]", pair.Key, pair.Value.guildName.PadRight(50 - pair.Value.guildName.Length), pair.Value.serverName));
 
             foreach (KeyValuePair<uint, Player> pair in Players)
-                listBox2.Items.Add(String.Format("{0} {1} {2,20}", pair.Value.Name.PadRight(32 - (pair.Value.Name).Length), pair.Value.Playerclass, pair.Value.Level));
+                listBox2.Items.Add(String.Format("{0} {1,25} {2,20}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
         }
     }
 }
