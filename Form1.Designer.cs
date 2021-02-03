@@ -39,10 +39,10 @@ namespace Assignment2
             this.label15 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.GuildNameBox = new System.Windows.Forms.TextBox();
+            this.GuildTypeBox = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.Servercombo = new System.Windows.Forms.ComboBox();
             this.AddGuild = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -82,24 +82,25 @@ namespace Assignment2
             // 
             // listBox1
             // 
-            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 14;
             this.listBox1.Location = new System.Drawing.Point(1328, 71);
             this.listBox1.Name = "listBox1";
             this.listBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.listBox1.Size = new System.Drawing.Size(261, 485);
+            this.listBox1.Size = new System.Drawing.Size(298, 480);
             this.listBox1.Sorted = true;
             this.listBox1.TabIndex = 3;
             // 
             // listBox2
             // 
-            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox2.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBox2.FormattingEnabled = true;
             this.listBox2.ItemHeight = 16;
-            this.listBox2.Location = new System.Drawing.Point(1031, 71);
+            this.listBox2.Location = new System.Drawing.Point(1104, 71);
             this.listBox2.Name = "listBox2";
             this.listBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.listBox2.Size = new System.Drawing.Size(278, 484);
+            this.listBox2.Size = new System.Drawing.Size(205, 484);
             this.listBox2.Sorted = true;
             this.listBox2.TabIndex = 4;
             // 
@@ -115,11 +116,13 @@ namespace Assignment2
             // 
             // OutputBox
             // 
+            this.OutputBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OutputBox.FormattingEnabled = true;
+            this.OutputBox.ItemHeight = 14;
             this.OutputBox.Location = new System.Drawing.Point(12, 668);
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.OutputBox.Size = new System.Drawing.Size(1710, 173);
+            this.OutputBox.Size = new System.Drawing.Size(1710, 172);
             this.OutputBox.TabIndex = 6;
             // 
             // label3
@@ -137,10 +140,10 @@ namespace Assignment2
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.comboBox2);
+            this.groupBox1.Controls.Add(this.GuildNameBox);
+            this.groupBox1.Controls.Add(this.GuildTypeBox);
             this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.comboBox3);
+            this.groupBox1.Controls.Add(this.Servercombo);
             this.groupBox1.Controls.Add(this.AddGuild);
             this.groupBox1.Location = new System.Drawing.Point(23, 418);
             this.groupBox1.Name = "groupBox1";
@@ -177,20 +180,21 @@ namespace Assignment2
             this.label13.TabIndex = 28;
             this.label13.Text = "Guild Name";
             // 
-            // textBox2
+            // GuildNameBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(15, 35);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(131, 20);
-            this.textBox2.TabIndex = 17;
+            this.GuildNameBox.Location = new System.Drawing.Point(15, 35);
+            this.GuildNameBox.Name = "GuildNameBox";
+            this.GuildNameBox.Size = new System.Drawing.Size(131, 20);
+            this.GuildNameBox.TabIndex = 17;
             // 
-            // comboBox2
+            // GuildTypeBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(167, 94);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(131, 21);
-            this.comboBox2.TabIndex = 21;
+            this.GuildTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.GuildTypeBox.FormattingEnabled = true;
+            this.GuildTypeBox.Location = new System.Drawing.Point(167, 94);
+            this.GuildTypeBox.Name = "GuildTypeBox";
+            this.GuildTypeBox.Size = new System.Drawing.Size(131, 21);
+            this.GuildTypeBox.TabIndex = 21;
             // 
             // label9
             // 
@@ -201,13 +205,16 @@ namespace Assignment2
             this.label9.TabIndex = 24;
             this.label9.Text = "label9";
             // 
-            // comboBox3
+            // Servercombo
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(167, 35);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(131, 21);
-            this.comboBox3.TabIndex = 22;
+            this.Servercombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Servercombo.FormattingEnabled = true;
+            this.Servercombo.Location = new System.Drawing.Point(167, 35);
+            this.Servercombo.MaxDropDownItems = 20;
+            this.Servercombo.Name = "Servercombo";
+            this.Servercombo.Size = new System.Drawing.Size(131, 21);
+            this.Servercombo.Sorted = true;
+            this.Servercombo.TabIndex = 22;
             // 
             // AddGuild
             // 
@@ -217,6 +224,7 @@ namespace Assignment2
             this.AddGuild.TabIndex = 16;
             this.AddGuild.Text = "Add Guild";
             this.AddGuild.UseVisualStyleBackColor = true;
+            this.AddGuild.Click += new System.EventHandler(this.AddGuild_Click);
             // 
             // groupBox2
             // 
@@ -303,6 +311,7 @@ namespace Assignment2
             this.AddPlayer.TabIndex = 15;
             this.AddPlayer.Text = "Add Player";
             this.AddPlayer.UseVisualStyleBackColor = true;
+            this.AddPlayer.Click += new System.EventHandler(this.AddPlayer_Click);
             // 
             // label6
             // 
@@ -372,6 +381,7 @@ namespace Assignment2
             this.JoinGuild.TabIndex = 12;
             this.JoinGuild.Text = "Join Guild";
             this.JoinGuild.UseVisualStyleBackColor = true;
+            this.JoinGuild.Click += new System.EventHandler(this.JoinGuild_Click);
             // 
             // ApplySearchCriteria
             // 
@@ -381,6 +391,7 @@ namespace Assignment2
             this.ApplySearchCriteria.TabIndex = 14;
             this.ApplySearchCriteria.Text = "Apply Search Criteria";
             this.ApplySearchCriteria.UseVisualStyleBackColor = true;
+            this.ApplySearchCriteria.Click += new System.EventHandler(this.ApplySearchCriteria_Click);
             // 
             // LeaveGuild
             // 
@@ -390,6 +401,7 @@ namespace Assignment2
             this.LeaveGuild.TabIndex = 13;
             this.LeaveGuild.Text = "Leave Guild";
             this.LeaveGuild.UseVisualStyleBackColor = true;
+            this.LeaveGuild.Click += new System.EventHandler(this.LeaveGuild_Click);
             // 
             // DisbandGuild
             // 
@@ -399,6 +411,7 @@ namespace Assignment2
             this.DisbandGuild.TabIndex = 11;
             this.DisbandGuild.Text = "Disband Guild";
             this.DisbandGuild.UseVisualStyleBackColor = true;
+            this.DisbandGuild.Click += new System.EventHandler(this.DisbandGuild_Click);
             // 
             // PrintGuildRoster
             // 
@@ -408,6 +421,7 @@ namespace Assignment2
             this.PrintGuildRoster.TabIndex = 10;
             this.PrintGuildRoster.Text = "Print Guild Roster";
             this.PrintGuildRoster.UseVisualStyleBackColor = true;
+            this.PrintGuildRoster.Click += new System.EventHandler(this.PrintGuildRoster_Click);
             // 
             // label4
             // 
@@ -459,10 +473,10 @@ namespace Assignment2
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox GuildNameBox;
+        private System.Windows.Forms.ComboBox GuildTypeBox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox Servercombo;
         private System.Windows.Forms.Button AddGuild;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label14;

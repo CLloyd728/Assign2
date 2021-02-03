@@ -29,6 +29,10 @@ namespace Assignment2
         {
             Warrior, Mage, Druid, Priest, Warlock, Rogue, Paladin, Hunter, Shaman
         };
+        public enum GuildType
+        {
+            Casual,Questing,Mythic,Raiding,PVP
+        };
 
         /*
          * Global variables
@@ -86,24 +90,26 @@ namespace Assignment2
         }
 
         //finds the guild specified by the user
-        public static uint FindGuild(Dictionary<uint, String> Guilds)
+        public static uint[] FindGuild(Dictionary<uint, Guild> Guilds, string gName)
         {
-            //asks the user for the guild name
-            Console.Write("Please enter the name of the Guild you would like to join/leave: ");
-            String guildname = Console.ReadLine();
-            uint key = 2147483647;
-
+            //asks the user for the guild name   
+            uint[] key = new uint[5];
+            for (int x = 0; x < 5; x++)
+                key[x] = 2147483647;
+            int i = 0;
             //searches the guild list for a guild by name
-            foreach (KeyValuePair<uint, String> pair in Guilds)
+            foreach (KeyValuePair<uint, Guild> pair in Guilds)
             {
-                if (pair.Value == guildname)
-                    key = pair.Key;
+                if (pair.Value.guildName == gName)
+                {
+                    key[i] = pair.Key;
+                    i++;
+                }
             }
 
             //returns and says that the guild couldn't be found.
-            if (key == 2147483647)
+            if (key[i] == 2147483647)
             {
-                Console.WriteLine("\nGuild under that name not found.");
                 return key;
             }
 
@@ -149,7 +155,7 @@ namespace Assignment2
                 //Seperate on tabs and add to dict of Guilds
                 string[] s = line.Split('\t');
                 string[] s1 = s[1].Split('-');
-                Guilds.Add((Convert.ToUInt32(s[0])), new Guild(s1[0].Trim(), s1[1].Trim()));
+                Guilds.Add((Convert.ToUInt32(s[0])), new Guild(s1[0], s1[1].Trim()));
             }
 
             //Read in data from Items file
@@ -679,21 +685,98 @@ namespace Assignment2
         {
             public string guildName;
             public string serverName;
-            public Guild(string GuildName, string ServerName)
+            public GuildType guildType;
+            public Guild(string GuildName, string ServerName, GuildType Guildtype = 0)
             {
                 guildName = GuildName;
                 serverName = ServerName;
+                guildType = Guildtype;
             }
         }
         public Assign2Form()
         {
             InitializeComponent();
             LoadData();
+            //prints out a list of guilds
             foreach (KeyValuePair<uint, Guild> pair in Guilds)
-                listBox1.Items.Add(String.Format("{0:000000}  {1} [{2}]", pair.Key, pair.Value.guildName.PadRight(50 - pair.Value.guildName.Length), pair.Value.serverName));
-
+            {
+                listBox1.Items.Add(String.Format("{0} {1}", pair.Value.guildName, pair.Value.serverName.PadLeft(40 - pair.Value.guildName.Length)));
+                if (Servercombo.FindStringExact(pair.Value.serverName) == -1)  
+                    Servercombo.Items.Add(pair.Value.serverName);
+            }
+            //prints out a list of players
             foreach (KeyValuePair<uint, Player> pair in Players)
-                listBox2.Items.Add(String.Format("{0} {1,25} {2,20}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
+                listBox2.Items.Add(String.Format("{0} {1,"+ (20 - pair.Value.Name.Length) + "} {2:00}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
+            Servercombo.SelectedIndex = 0;
+            //adds all the possible types of guilds to the dropdown box
+            GuildTypeBox.Items.Add("Casual");
+            GuildTypeBox.Items.Add("Questing");
+            GuildTypeBox.Items.Add("Mythic");
+            GuildTypeBox.Items.Add("Raiding");
+            GuildTypeBox.Items.Add("PVP");
+            GuildTypeBox.SelectedIndex = 0;
+        }
+
+        private void PrintGuildRoster_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This button doesn't do anything yet.");
+        }
+
+        private void DisbandGuild_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This button doesn't do anything yet.");
+        }
+
+        private void JoinGuild_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This button doesn't do anything yet.");
+        }
+
+        private void LeaveGuild_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This button doesn't do anything yet.");
+        }
+
+        private void ApplySearchCriteria_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This button doesn't do anything yet.");
+        }
+
+        private void AddPlayer_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This button doesn't do anything yet.");
+        }
+        //the button to add a guild to the guild list.
+        private void AddGuild_Click(object sender, EventArgs e)
+        {
+            //checks to see if the text box is empty
+            if(GuildNameBox.TextLength == 0)
+            {
+                //if it is empty it asks the user to enter something and then returns
+                MessageBox.Show("Please enter a guild name.");
+                return;
+            }
+            //checks to see if the guild name already exists
+            uint[] temp = FindGuild(Guilds, GuildNameBox.Text);
+            for (uint i = 0; temp[i] != 2147483647; i++)
+            {
+                //if the name already exists it checks to see if it exists on the desired server
+                if (Guilds[temp[i]].serverName.CompareTo(Servercombo.Text) == 0)
+                {
+                    //if it does it tells you and then returns
+                    MessageBox.Show("A guild with that name on this server already exists.");
+                    return;
+                }
+            }
+            //creates a random key to assign the guild
+            Random generator = new Random();
+            uint r = (uint)generator.Next(0, 999999);
+            //if it manages to get a key that already exists it trys again
+            while(Guilds.ContainsKey(r))
+                r = (uint)generator.Next(0, 999999);
+            //adds the guild to the guild list and then adds it to the printed guild list.
+            Guilds.Add(r, new Guild(GuildNameBox.Text.Trim(), Servercombo.Text, (GuildType)GuildTypeBox.SelectedIndex));
+            listBox1.Items.Add(String.Format("{0} {1}", Guilds[r].guildName, Guilds[r].serverName.PadLeft(40 - Guilds[r].guildName.Length)));
         }
     }
 }
