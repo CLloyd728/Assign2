@@ -46,12 +46,12 @@ namespace Assignment2
             this.AddGuild = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.ClassBox = new System.Windows.Forms.ComboBox();
+            this.RoleBox = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.RaceBox = new System.Windows.Forms.ComboBox();
+            this.PlayerNameBox = new System.Windows.Forms.TextBox();
             this.AddPlayer = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -229,12 +229,12 @@ namespace Assignment2
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.comboBox6);
-            this.groupBox2.Controls.Add(this.comboBox5);
+            this.groupBox2.Controls.Add(this.ClassBox);
+            this.groupBox2.Controls.Add(this.RoleBox);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.comboBox1);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.RaceBox);
+            this.groupBox2.Controls.Add(this.PlayerNameBox);
             this.groupBox2.Controls.Add(this.AddPlayer);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(23, 275);
@@ -254,21 +254,24 @@ namespace Assignment2
             this.label14.TabIndex = 29;
             this.label14.Text = "Class";
             // 
-            // comboBox6
+            // ClassBox
             // 
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(15, 89);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(131, 21);
-            this.comboBox6.TabIndex = 25;
+            this.ClassBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ClassBox.FormattingEnabled = true;
+            this.ClassBox.Location = new System.Drawing.Point(15, 89);
+            this.ClassBox.Name = "ClassBox";
+            this.ClassBox.Size = new System.Drawing.Size(131, 21);
+            this.ClassBox.TabIndex = 25;
+            this.ClassBox.SelectedIndexChanged += new System.EventHandler(this.ClassBox_SelectedIndexChanged);
             // 
-            // comboBox5
+            // RoleBox
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(167, 89);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(131, 21);
-            this.comboBox5.TabIndex = 24;
+            this.RoleBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RoleBox.FormattingEnabled = true;
+            this.RoleBox.Location = new System.Drawing.Point(167, 89);
+            this.RoleBox.Name = "RoleBox";
+            this.RoleBox.Size = new System.Drawing.Size(131, 21);
+            this.RoleBox.TabIndex = 24;
             // 
             // label12
             // 
@@ -288,20 +291,21 @@ namespace Assignment2
             this.label8.TabIndex = 23;
             this.label8.Text = "Role";
             // 
-            // comboBox1
+            // RaceBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(167, 40);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(131, 21);
-            this.comboBox1.TabIndex = 20;
+            this.RaceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.RaceBox.FormattingEnabled = true;
+            this.RaceBox.Location = new System.Drawing.Point(167, 40);
+            this.RaceBox.Name = "RaceBox";
+            this.RaceBox.Size = new System.Drawing.Size(131, 21);
+            this.RaceBox.TabIndex = 20;
             // 
-            // textBox1
+            // PlayerNameBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(15, 40);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(131, 20);
-            this.textBox1.TabIndex = 16;
+            this.PlayerNameBox.Location = new System.Drawing.Point(15, 40);
+            this.PlayerNameBox.Name = "PlayerNameBox";
+            this.PlayerNameBox.Size = new System.Drawing.Size(131, 20);
+            this.PlayerNameBox.TabIndex = 16;
             // 
             // AddPlayer
             // 
@@ -480,12 +484,12 @@ namespace Assignment2
         private System.Windows.Forms.Button AddGuild;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox ClassBox;
+        private System.Windows.Forms.ComboBox RoleBox;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox RaceBox;
+        private System.Windows.Forms.TextBox PlayerNameBox;
         private System.Windows.Forms.Button AddPlayer;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox3;
