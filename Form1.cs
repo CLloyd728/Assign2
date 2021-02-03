@@ -520,7 +520,7 @@ namespace Assignment2
             public override String ToString()
             {
                 string message = "Name: " + String.Format("{0,-12}", _name) + "\tRace: " + _race + "\tLevel: " + _level;
-                return _guildID == 0 ? message : message + "\tGuild: " + Guilds[_guildID];
+                return _guildID == 0 ? message : message + "\tGuild: " + Guilds[GuildID].guildName;
 
             }
         }
@@ -938,6 +938,13 @@ namespace Assignment2
                 default:
                     break;
             }
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string[] s = listBox2.SelectedItem.ToString().Split(' ');
+            uint key = FindPlayerName(Players, s[0]);
+            OutputBox.Items.Add(Players[key]);
         }
     }
 }
