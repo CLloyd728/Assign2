@@ -204,6 +204,7 @@ namespace Assignment2
             private uint[] _gear;
             private PlayerClass _playerclass;
             private List<uint> _inventory;
+            string _role = "";
             bool firstRingNext = true;
             bool firstTrinkNext = true;
 
@@ -240,6 +241,14 @@ namespace Assignment2
                     Array.Copy(gear, gear.GetLowerBound(0), _gear, _gear.GetLowerBound(0), GEAR_SLOTS);
                 _inventory = new List<uint>();
                 _playerclass = playerclass;
+            }
+            /*
+             *Role property
+             */
+            public string Role
+            {
+                get => _role;
+                set => _role = value;
             }
 
             /*
@@ -715,6 +724,21 @@ namespace Assignment2
             GuildTypeBox.Items.Add("Raiding");
             GuildTypeBox.Items.Add("PVP");
             GuildTypeBox.SelectedIndex = 0;
+            //adding the classes to the class dropdown
+            ClassBox.Items.Add("Warrior"); 
+            ClassBox.Items.Add("Mage"); 
+            ClassBox.Items.Add("Druid"); 
+            ClassBox.Items.Add("Priest"); 
+            ClassBox.Items.Add("Warlock"); 
+            ClassBox.Items.Add("Rogue"); 
+            ClassBox.Items.Add("Paladin"); 
+            ClassBox.Items.Add("Hunter"); 
+            ClassBox.Items.Add("Shaman");
+            //adding the races to the race dropdown
+            RaceBox.Items.Add("Orc");
+            RaceBox.Items.Add("Troll");
+            RaceBox.Items.Add("Tauren");
+            RaceBox.Items.Add("Forsakken");
         }
 
         private void PrintGuildRoster_Click(object sender, EventArgs e)
@@ -741,11 +765,80 @@ namespace Assignment2
         {
             MessageBox.Show("This button doesn't do anything yet.");
         }
-
+        //the button that adds a player
         private void AddPlayer_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This button doesn't do anything yet.");
+            //tests to make sure all the fields are filled in
+            if (PlayerNameBox.TextLength == 0)
+            {
+                MessageBox.Show("Please enter a player name.");
+                return;
+            }
+            if(RaceBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a race.");
+                return;
+            }
+            if (ClassBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a Class.");
+                return;
+            }
+            if (RoleBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a Role.");
+                return;
+            }
+            //checks to see if the player name is taken if so makes them change it
+            if(FindPlayerName(Players,PlayerNameBox.Text.Trim()) != 2147483647)
+            {
+                MessageBox.Show("A player with that name already exists, please try another one.");
+                return;
+            }
+            //creates a random key to assign the guild
+            Random generator = new Random();
+            uint r = (uint)generator.Next(0, 999999);
+            //if it manages to get a key that already exists it trys again
+            while (Players.ContainsKey(r))
+                r = (uint)generator.Next(0, 999999);
+            //makes an empty gear array for the constructor
+            uint[] gear;
+            gear = new uint[MAX_INVENTORY_SIZE];
+            for (int i = 0; i < MAX_INVENTORY_SIZE; i++)
+                gear[i] = 0; 
+            //creates the new player object and then adds it to the dictionary and then also adds it to the printing list.
+            Players.Add(r, new Player(r, PlayerNameBox.Text.Trim(), (Race)RaceBox.SelectedIndex, (PlayerClass)ClassBox.SelectedIndex, 1, 0, 0, gear));
+            listBox2.Items.Add(String.Format("{0} {1," + (20 - Players[r].Name.Length) + "} {2:00}", Players[r].Name, Players[r].Playerclass, Players[r].Level));
+            //resets all the fields
+            PlayerNameBox.Clear();
+            RoleBox.SelectedIndex = -1;
+            RaceBox.SelectedIndex = -1;
+            ClassBox.SelectedIndex = -1;
         }
+        //checks through the player dictionary based soley on a given name
+        private uint FindPlayerName(Dictionary<uint, Player> Players, string pname)
+        {
+            //asks the user for the Player name   
+            uint key = 2147483647;
+            //searches the guild list for a Player by name
+            foreach (KeyValuePair<uint, Player> pair in Players)
+            {
+                if (pair.Value.Name == pname)
+                {
+                    key = pair.Key;
+                }
+            }
+
+            //returns and says that the Player couldn't be found.
+            if (key == 2147483647)
+            {
+                return key;
+            }
+
+            //returns the Player key
+            return key;
+        }
+
         //the button to add a guild to the guild list.
         private void AddGuild_Click(object sender, EventArgs e)
         {
@@ -777,6 +870,74 @@ namespace Assignment2
             //adds the guild to the guild list and then adds it to the printed guild list.
             Guilds.Add(r, new Guild(GuildNameBox.Text.Trim(), Servercombo.Text, (GuildType)GuildTypeBox.SelectedIndex));
             listBox1.Items.Add(String.Format("{0} {1}", Guilds[r].guildName, Guilds[r].serverName.PadLeft(40 - Guilds[r].guildName.Length)));
+            GuildNameBox.Clear();
+            Servercombo.SelectedIndex = 0;
+            GuildTypeBox.SelectedIndex = 0;
+        }
+
+        private void ClassBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (ClassBox.SelectedIndex)
+            {
+                //Warrior case
+                case 0:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Tank");
+                    RoleBox.Items.Add("Dps");
+                    break;
+                //Mage case
+                case 1:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Dps");
+                    RoleBox.SelectedIndex = 0;
+                    break;
+                //Druid case
+                case 2:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Tank");
+                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.Add("Healer");
+                    break;
+                //Priest
+                case 3:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Healer");
+                    RoleBox.Items.Add("Dps");
+                    break;
+                //Warlock
+                case 4:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Dps");
+                    RoleBox.SelectedIndex = 0;
+                    break;
+                //Rogue
+                case 5:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Dps");
+                    RoleBox.SelectedIndex = 0;
+                    break;
+                //Paladin
+                case 6:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Tank");
+                    RoleBox.Items.Add("Healer");
+                    RoleBox.Items.Add("Dps");
+                    break;
+                //Hunter
+                case 7:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Dps");
+                    RoleBox.SelectedIndex = 0;
+                    break;
+                //Shaman
+                case 8:
+                    RoleBox.Items.Clear();
+                    RoleBox.Items.Add("Healer");
+                    RoleBox.Items.Add("Dps");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
