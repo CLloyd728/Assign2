@@ -1,4 +1,4 @@
-﻿
+
 namespace Assignment2
 {
     partial class Assign2Form
@@ -29,6 +29,7 @@ namespace Assignment2
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Assign2Form));
             this.Label1 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
@@ -100,7 +101,7 @@ namespace Assignment2
             this.listBox2.Location = new System.Drawing.Point(1104, 71);
             this.listBox2.Name = "listBox2";
             this.listBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.listBox2.Size = new System.Drawing.Size(205, 484);
+            this.listBox2.Size = new System.Drawing.Size(200, 484);
             this.listBox2.Sorted = true;
             this.listBox2.TabIndex = 4;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
@@ -370,6 +371,7 @@ namespace Assignment2
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(131, 20);
             this.textBox3.TabIndex = 18;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox4
             // 
@@ -377,6 +379,7 @@ namespace Assignment2
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(131, 20);
             this.textBox4.TabIndex = 19;
+            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // JoinGuild
             // 
@@ -453,9 +456,10 @@ namespace Assignment2
             this.Controls.Add(this.listBox2);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.Label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Assign2Form";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.Text = "Form1";
+            this.Text = "World of ConflictCraft";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -506,4 +510,3 @@ namespace Assignment2
         private System.Windows.Forms.Label label4;
     }
 }
-
