@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +11,7 @@ using System.IO;
 
 namespace Assignment2
 {
-    
+
     public partial class Assign2Form : Form
     {
         /*
@@ -31,7 +31,7 @@ namespace Assignment2
         };
         public enum GuildType
         {
-            Casual,Questing,Mythic,Raiding,PVP
+            Casual, Questing, Mythic, Raiding, PVP
         };
 
         /*
@@ -57,9 +57,9 @@ namespace Assignment2
          * You Might have to alter the path if you have the input files located in a different folder than I do.
          * Mine are in the same folder where the Assign1.cs file is located in VS.
          */
-        private static string guildsFile = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName) + "\\guilds.txt";
-        private static string itemsFile = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName) + "\\equipment.txt";
-        private static string playersFile = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName) + "\\players.txt";
+        private static string guildsFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\guilds.txt";
+        private static string itemsFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\equipment.txt";
+        private static string playersFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\players.txt";
         //finds the player specified by the user
         public static uint FindPlayer(Dictionary<uint, Player> Players)
         {
@@ -181,7 +181,7 @@ namespace Assignment2
                 {
                     ar[i] = Convert.ToUInt32(s[x]);
                 }*/
-                Player player = new Player(Convert.ToUInt32(s[0]), s[1].Trim(), (Race)Convert.ToUInt32(s[2]),(PlayerClass)Convert.ToUInt32(s[3]), Convert.ToUInt32(s[4]),
+                Player player = new Player(Convert.ToUInt32(s[0]), s[1].Trim(), (Race)Convert.ToUInt32(s[2]), (PlayerClass)Convert.ToUInt32(s[3]), Convert.ToUInt32(s[4]),
                                    Convert.ToUInt32(s[5]), Convert.ToUInt32(s[6]), ar);
                 Players.Add(player.Id, player);
             }
@@ -709,13 +709,13 @@ namespace Assignment2
             //prints out a list of guilds
             foreach (KeyValuePair<uint, Guild> pair in Guilds)
             {
-                listBox1.Items.Add(String.Format("{0} {1}", pair.Value.guildName, pair.Value.serverName.PadLeft(40 - pair.Value.guildName.Length)));
-                if (Servercombo.FindStringExact(pair.Value.serverName) == -1)  
+                listBox1.Items.Add(String.Format("{0} {1}", pair.Value.guildName, ("[" + pair.Value.serverName + "]").PadLeft(40 - pair.Value.guildName.Length)));
+                if (Servercombo.FindStringExact(pair.Value.serverName) == -1)
                     Servercombo.Items.Add(pair.Value.serverName);
             }
             //prints out a list of players
             foreach (KeyValuePair<uint, Player> pair in Players)
-                listBox2.Items.Add(String.Format("{0} {1,"+ (20 - pair.Value.Name.Length) + "} {2:00}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
+                listBox2.Items.Add(String.Format("{0} {1," + (20 - pair.Value.Name.Length) + "} {2:00}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
             Servercombo.SelectedIndex = 0;
             //adds all the possible types of guilds to the dropdown box
             GuildTypeBox.Items.Add("Casual");
@@ -725,14 +725,14 @@ namespace Assignment2
             GuildTypeBox.Items.Add("PVP");
             GuildTypeBox.SelectedIndex = 0;
             //adding the classes to the class dropdown
-            ClassBox.Items.Add("Warrior"); 
-            ClassBox.Items.Add("Mage"); 
-            ClassBox.Items.Add("Druid"); 
-            ClassBox.Items.Add("Priest"); 
-            ClassBox.Items.Add("Warlock"); 
-            ClassBox.Items.Add("Rogue"); 
-            ClassBox.Items.Add("Paladin"); 
-            ClassBox.Items.Add("Hunter"); 
+            ClassBox.Items.Add("Warrior");
+            ClassBox.Items.Add("Mage");
+            ClassBox.Items.Add("Druid");
+            ClassBox.Items.Add("Priest");
+            ClassBox.Items.Add("Warlock");
+            ClassBox.Items.Add("Rogue");
+            ClassBox.Items.Add("Paladin");
+            ClassBox.Items.Add("Hunter");
             ClassBox.Items.Add("Shaman");
             //adding the races to the race dropdown
             RaceBox.Items.Add("Orc");
@@ -761,10 +761,78 @@ namespace Assignment2
             MessageBox.Show("This button doesn't do anything yet.");
         }
 
+        // Button to filter players and guilds
         private void ApplySearchCriteria_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This button doesn't do anything yet.");
+            // Check if text boxes are both empty, if so do nothing
+            if (textBox4.Text == "" && textBox3.Text == "")
+            { 
+                OutputBox.Items.Add("Please enter a search term to use this feature.");
+                return;
+            }
+
+            // Otherwise print new lists based on search term(s)
+            else
+            {
+                // Check for entry in player search term
+                if (textBox4.Text != "")
+                {
+                    listBox2.Items.Clear();
+                    // Populate the list
+                    foreach (KeyValuePair<uint, Player> pair1 in Players)
+                        if (pair1.Value.Name.StartsWith(textBox4.Text[0].ToString()))
+                            listBox2.Items.Add(String.Format("{0} {1," + (20 - pair1.Value.Name.Length) + "} {2:00}", pair1.Value.Name, pair1.Value.Playerclass, pair1.Value.Level));                      
+
+                    // If list is empty, reprint all players
+                    if (listBox2.Items.Count == 0)
+                    {
+                        OutputBox.Items.Add("No match was found for entered player " + textBox4.Text);
+                        foreach (KeyValuePair<uint, Player> pair2 in Players)
+                            listBox2.Items.Add(String.Format("{0} {1," + (20 - pair2.Value.Name.Length) + "} {2:00}", pair2.Value.Name, pair2.Value.Playerclass, pair2.Value.Level));
+                    }
+                }
+
+                // Check for entry in guild search term
+                if (textBox3.Text != "")
+                {
+                    listBox1.Items.Clear();
+                    // Populate the list
+                    foreach (KeyValuePair<uint, Guild> pair1 in Guilds)
+                        if (pair1.Value.serverName == textBox3.Text)
+                            listBox1.Items.Add(String.Format("{0} {1}", pair1.Value.guildName, ("[" + pair1.Value.serverName + "]").PadLeft(40 - pair1.Value.guildName.Length)));
+
+                    // If list is empty, reprint all guilds
+                    if (listBox1.Items.Count == 0)
+                    {
+                        OutputBox.Items.Add("No match was found for entered server " + textBox3.Text);
+                        foreach (KeyValuePair<uint, Guild> pair2 in Guilds)
+                            listBox1.Items.Add(String.Format("{0} {1}", pair2.Value.guildName, ("[" + pair2.Value.serverName + "]").PadLeft(40 - pair2.Value.guildName.Length)));
+                    }
+                }
+            }
         }
+        // Reset the player list when player search term box cleared out
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox4.Text == "")
+            {
+                listBox2.Items.Clear();
+                foreach (KeyValuePair<uint, Player> pair in Players)
+                    listBox2.Items.Add(String.Format("{0} {1," + (20 - pair.Value.Name.Length) + "} {2:00}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
+            }
+
+        }
+        // Reset the guild list when guild search term box cleared out
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox3.Text == "")
+            {
+                listBox1.Items.Clear();
+                foreach (KeyValuePair<uint, Guild> pair in Guilds)
+                    listBox1.Items.Add(String.Format("{0} {1}", pair.Value.guildName, ("[" + pair.Value.serverName + "]").PadLeft(40 - pair.Value.guildName.Length)));
+            }
+        }
+                 
         //the button that adds a player
         private void AddPlayer_Click(object sender, EventArgs e)
         {
@@ -774,7 +842,7 @@ namespace Assignment2
                 MessageBox.Show("Please enter a player name.");
                 return;
             }
-            if(RaceBox.SelectedIndex == -1)
+            if (RaceBox.SelectedIndex == -1)
             {
                 MessageBox.Show("Please select a race.");
                 return;
@@ -790,7 +858,7 @@ namespace Assignment2
                 return;
             }
             //checks to see if the player name is taken if so makes them change it
-            if(FindPlayerName(Players,PlayerNameBox.Text.Trim()) != 2147483647)
+            if (FindPlayerName(Players, PlayerNameBox.Text.Trim()) != 2147483647)
             {
                 MessageBox.Show("A player with that name already exists, please try another one.");
                 return;
@@ -805,7 +873,7 @@ namespace Assignment2
             uint[] gear;
             gear = new uint[MAX_INVENTORY_SIZE];
             for (int i = 0; i < MAX_INVENTORY_SIZE; i++)
-                gear[i] = 0; 
+                gear[i] = 0;
             //creates the new player object and then adds it to the dictionary and then also adds it to the printing list.
             Players.Add(r, new Player(r, PlayerNameBox.Text.Trim(), (Race)RaceBox.SelectedIndex, (PlayerClass)ClassBox.SelectedIndex, 1, 0, 0, gear));
             listBox2.Items.Add(String.Format("{0} {1," + (20 - Players[r].Name.Length) + "} {2:00}", Players[r].Name, Players[r].Playerclass, Players[r].Level));
@@ -843,7 +911,7 @@ namespace Assignment2
         private void AddGuild_Click(object sender, EventArgs e)
         {
             //checks to see if the text box is empty
-            if(GuildNameBox.TextLength == 0)
+            if (GuildNameBox.TextLength == 0)
             {
                 //if it is empty it asks the user to enter something and then returns
                 MessageBox.Show("Please enter a guild name.");
@@ -865,11 +933,11 @@ namespace Assignment2
             Random generator = new Random();
             uint r = (uint)generator.Next(0, 999999);
             //if it manages to get a key that already exists it trys again
-            while(Guilds.ContainsKey(r))
+            while (Guilds.ContainsKey(r))
                 r = (uint)generator.Next(0, 999999);
             //adds the guild to the guild list and then adds it to the printed guild list.
             Guilds.Add(r, new Guild(GuildNameBox.Text.Trim(), Servercombo.Text, (GuildType)GuildTypeBox.SelectedIndex));
-            listBox1.Items.Add(String.Format("{0} {1}", Guilds[r].guildName, Guilds[r].serverName.PadLeft(40 - Guilds[r].guildName.Length)));
+            listBox1.Items.Add(String.Format("{0} {1}", Guilds[r].guildName, ("[" + Guilds[r].serverName + "]").PadLeft(40 - Guilds[r].guildName.Length)));
             GuildNameBox.Clear();
             Servercombo.SelectedIndex = 0;
             GuildTypeBox.SelectedIndex = 0;
@@ -945,6 +1013,6 @@ namespace Assignment2
             string[] s = listBox2.SelectedItem.ToString().Split(' ');
             uint key = FindPlayerName(Players, s[0]);
             OutputBox.Items.Add(Players[key]);
-        }
+        }    
     }
 }
