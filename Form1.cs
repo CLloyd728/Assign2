@@ -743,7 +743,37 @@ namespace Assignment2
 
         private void PrintGuildRoster_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This button doesn't do anything yet.");
+            int printed = 0;
+            // Check for a guilds selection, return if none
+            if (listBox1.SelectedIndex == -1)
+            {
+                OutputBox.Items.Add("Please select a guild from the list.");
+                return;
+            }
+
+            string[] nameMatch = listBox1.SelectedItem.ToString().Split('[');
+            string[] serverMatch = nameMatch[1].Split(']');
+            OutputBox.Items.Add("Guild Listing for " + nameMatch[0].Trim() + "\t[" + nameMatch[1]);
+            OutputBox.Items.Add(new String('-', 70));
+
+            // Check for valid match on guild name and server name
+            foreach (KeyValuePair<uint, Player> pair in Players)
+            {
+                foreach (KeyValuePair<uint, Guild> pair2 in Guilds)
+                { 
+                    if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
+                    {
+                         OutputBox.Items.Add("Name: " + pair.Value.Name.PadRight(22, ' ') + "Race: " + Convert.ToString(pair.Value.Race).PadRight(15, ' ') + "Level: " + Convert.ToString(pair.Value.Level).PadRight(10, ' ') +
+                                             "Guild: " + Guilds[pair.Value.GuildID].guildName + "-" + Guilds[pair.Value.GuildID].serverName);
+                         printed++;
+                         break;
+                     }                    
+                }
+            }
+
+            // If no members, print message
+            if (printed == 0)
+                OutputBox.Items.Add("There are currently no members in " + nameMatch[0].Trim() + "-" + serverMatch[0].Trim());
         }
 
         private void DisbandGuild_Click(object sender, EventArgs e)
