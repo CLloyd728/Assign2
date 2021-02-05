@@ -774,7 +774,41 @@ namespace Assignment2
 
         private void DisbandGuild_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This button doesn't do anything yet.");
+            // Check for a guilds selection, return if none
+            if (listBox1.SelectedIndex == -1)
+            {
+                OutputBox.Items.Add("Please select a guild from the list.");
+                return;
+            }
+            //splits up the guild and server name from the selected item in listbox1
+            string[] nameMatch = listBox1.SelectedItem.ToString().Split('[');
+            string[] serverMatch = nameMatch[1].Split(']');
+            OutputBox.Items.Add("Guild Listing for " + nameMatch[0].Trim() + "\t[" + nameMatch[1]);
+            OutputBox.Items.Add(new String('-', 70));
+            uint guildID = 0;
+            //finds the guild id based on the name and server name
+            foreach (KeyValuePair<uint, Guild> pair in Guilds)
+            {
+                if (pair.Value.guildName == nameMatch[0].Trim() && pair.Value.serverName == serverMatch[0])
+                {
+                    guildID = pair.Key;
+                }
+            }
+            // Check for valid match on guild name and server name match and then removes those players from the guild
+            foreach (KeyValuePair<uint, Player> pair in Players)
+            {
+                if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
+                {
+                    guildID = pair.Value.GuildID;
+                }
+            }
+            //adds a message saying that guild has been disbanded
+            OutputBox.Items.Add("The Guild " + Guilds[guildID].guildName + "on " + Guilds[guildID].serverName + " has been disbanded");
+            //removes the guild from the list and then the box where it is listed
+            if(guildID!=0)
+                Guilds.Remove(guildID);
+            listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+            listBox1.SelectedIndex = -1;
         }
 
         private void JoinGuild_Click(object sender, EventArgs e)
