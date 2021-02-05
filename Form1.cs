@@ -780,12 +780,14 @@ namespace Assignment2
                 OutputBox.Items.Add("Please select a guild from the list.");
                 return;
             }
+            
             //splits up the guild and server name from the selected item in listbox1
             string[] nameMatch = listBox1.SelectedItem.ToString().Split('[');
             string[] serverMatch = nameMatch[1].Split(']');
             OutputBox.Items.Add("Guild Listing for " + nameMatch[0].Trim() + "\t[" + nameMatch[1]);
             OutputBox.Items.Add(new String('-', 70));
-            uint guildID = 0;
+            
+            uint guildID = 0;          
             //finds the guild id based on the name and server name
             foreach (KeyValuePair<uint, Guild> pair in Guilds)
             {
@@ -794,18 +796,17 @@ namespace Assignment2
                     guildID = pair.Key;
                 }
             }
+
             // Check for valid match on guild name and server name match and then removes those players from the guild
             foreach (KeyValuePair<uint, Player> pair in Players)
-            {
-                if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
-                {
-                    guildID = pair.Value.GuildID;
-                }
-            }
+                if (pair.Value.GuildID == guildID)
+                        pair.Value.GuildID = 0;
+
             //adds a message saying that guild has been disbanded
             OutputBox.Items.Add("The Guild " + Guilds[guildID].guildName + "on " + Guilds[guildID].serverName + " has been disbanded");
+
             //removes the guild from the list and then the box where it is listed
-            if(guildID!=0)
+            if (guildID != 0)
                 Guilds.Remove(guildID);
             listBox1.Items.RemoveAt(listBox1.SelectedIndex);
             listBox1.SelectedIndex = -1;
