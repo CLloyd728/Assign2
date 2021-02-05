@@ -759,16 +759,12 @@ namespace Assignment2
             // Check for valid match on guild name and server name
             foreach (KeyValuePair<uint, Player> pair in Players)
             {
-                foreach (KeyValuePair<uint, Guild> pair2 in Guilds)
-                { 
-                    if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
-                    {
-                         OutputBox.Items.Add("Name: " + pair.Value.Name.PadRight(22, ' ') + "Race: " + Convert.ToString(pair.Value.Race).PadRight(15, ' ') + "Level: " + Convert.ToString(pair.Value.Level).PadRight(10, ' ') +
-                                             "Guild: " + Guilds[pair.Value.GuildID].guildName + "-" + Guilds[pair.Value.GuildID].serverName);
-                         printed++;
-                         break;
-                     }                    
-                }
+                if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
+                {
+                    OutputBox.Items.Add("Name: " + pair.Value.Name.PadRight(22, ' ') + "Race: " + Convert.ToString(pair.Value.Race).PadRight(15, ' ') + "Level: " + Convert.ToString(pair.Value.Level).PadRight(10, ' ') +
+                                        "Guild: " + Guilds[pair.Value.GuildID].guildName + "-" + Guilds[pair.Value.GuildID].serverName);
+                    printed++;                    
+                }                                 
             }
 
             // If no members, print message
