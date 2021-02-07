@@ -520,7 +520,7 @@ namespace Assignment2
             public override String ToString()
             {
                 string message = "Name: " + String.Format("{0,-12}", _name) + "\tRace: " + _race + "\tLevel: " + _level;
-                return _guildID == 0 ? message : message + "\tGuild: " + Guilds[GuildID].guildName;
+                return _guildID == 0 ? message : message + "     Guild: " + Guilds[GuildID].guildName + " [" + Guilds[GuildID].serverName + "]";
 
             }
         }
@@ -762,7 +762,7 @@ namespace Assignment2
             // Get guild name and server selection from list
             string[] nameMatch = GuildBox.SelectedItem.ToString().Split('[');
             string[] serverMatch = nameMatch[1].Split(']');
-            OutputBox.Items.Add("Guild Listing for " + nameMatch[0].Trim() + "\t[" + nameMatch[1]);
+            OutputBox.Items.Add("Guild Listing for " + nameMatch[0].Trim() + " [" + nameMatch[1]);
             OutputBox.Items.Add(new String('-', 70));
             OutputBox.TopIndex = OutputBox.Items.Count - 1;
 
@@ -773,7 +773,7 @@ namespace Assignment2
                     if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
                     {
                         OutputBox.Items.Add("Name: " + pair.Value.Name.PadRight(22, ' ') + "Race: " + Convert.ToString(pair.Value.Race).PadRight(15, ' ') + "Level: " + Convert.ToString(pair.Value.Level).PadRight(10, ' ') +
-                                            "Guild: " + Guilds[pair.Value.GuildID].guildName + "-" + Guilds[pair.Value.GuildID].serverName);
+                                            "Guild: " + Guilds[pair.Value.GuildID].guildName + " [" + Guilds[pair.Value.GuildID].serverName + "]");
                         OutputBox.TopIndex = OutputBox.Items.Count - 1;
                         noMembers = false;                    
                     }                                 
@@ -861,7 +861,7 @@ namespace Assignment2
             }
             OutputBox.TopIndex = OutputBox.Items.Count - 1;
 
-            // Get player name from list is valid selection
+            // Get player name from list
             string[] s = PlayerBox.SelectedItem.ToString().Split(' ');
 
             // Find selected player object
@@ -886,7 +886,7 @@ namespace Assignment2
                 if (s[0].Trim() == pair2.Value.guildName)
                 {
                     Players[player].GuildID = pair2.Key;
-                    OutputBox.Items.Add(Players[player].Name + " has successfuly joined " + pair2.Value.guildName + "!");
+                    OutputBox.Items.Add(Players[player].Name + " has successfuly joined " + pair2.Value.guildName + " [" + pair2.Value.serverName + "]!");
                     OutputBox.TopIndex = OutputBox.Items.Count - 1;
                 }        
         }
@@ -920,8 +920,7 @@ namespace Assignment2
                 return;
             }
            
-            OutputBox.Items.Add(Players[player].Name + " has left " + Guilds[(Players[player].GuildID)].guildName + "!");
-            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+            OutputBox.Items.Add(Players[player].Name + " has left " + Guilds[(Players[player].GuildID)].guildName + " [" + Guilds[(Players[player].GuildID)].serverName + "].");
             Players[player].GuildID = 0;
         }
 
