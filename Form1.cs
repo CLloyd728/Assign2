@@ -893,7 +893,36 @@ namespace Assignment2
 
         private void LeaveGuild_Click(object sender, EventArgs e)
         {
-            return;
+            // Check for valid player selection
+            if (PlayerBox.SelectedIndex == -1)
+            {
+                OutputBox.Items.Add("Please select a player from the list.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                return;
+            }
+
+            // Get player name from list
+            string[] s = PlayerBox.SelectedItem.ToString().Split(' ');
+
+            // Find selected player object
+            uint player = 0;
+            foreach (KeyValuePair<uint, Player> pair in Players)
+            {
+                if (pair.Value.Name == s[0])
+                    player = pair.Key;
+            }
+
+            // Make sure player is in a guild
+            if (Players[player].GuildID == 0)
+            {
+                OutputBox.Items.Add(Players[player].Name + " is not in a guild and thus cannot leave one.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                return;
+            }
+           
+            OutputBox.Items.Add(Players[player].Name + " has left " + Guilds[(Players[player].GuildID)].guildName + "!");
+            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+            Players[player].GuildID = 0;
         }
 
         // Button to filter players and guilds
