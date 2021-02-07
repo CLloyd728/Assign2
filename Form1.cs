@@ -1,11 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -829,7 +823,6 @@ namespace Assignment2
             if (removed > 0)
                 OutputBox.Items.Add('\n');
             OutputBox.Items.Add("The Guild " + Guilds[guildID].guildName + " [" + Guilds[guildID].serverName + "] has been successfuly disbanded");
-            OutputBox.Items.Add(new String('-', 70));
             OutputBox.Items.Add('\n');
             OutputBox.TopIndex = OutputBox.Items.Count - 1;
 
@@ -865,12 +858,7 @@ namespace Assignment2
             string[] s = PlayerBox.SelectedItem.ToString().Split(' ');
 
             // Find selected player object
-            uint player = 0;  
-            foreach (KeyValuePair<uint, Player> pair in Players)
-            {
-                if (pair.Value.Name == s[0])
-                    player = pair.Key;                 
-            }
+            uint player = FindPlayerName(Players, s[0]);
 
             // Make sure player not already in guild
             if (Players[player].GuildID != 0)
@@ -905,12 +893,7 @@ namespace Assignment2
             string[] s = PlayerBox.SelectedItem.ToString().Split(' ');
 
             // Find selected player object
-            uint player = 0;
-            foreach (KeyValuePair<uint, Player> pair in Players)
-            {
-                if (pair.Value.Name == s[0])
-                    player = pair.Key;
-            }
+            uint player = FindPlayerName(Players, s[0]);
 
             // Make sure player is in a guild
             if (Players[player].GuildID == 0)
