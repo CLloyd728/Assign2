@@ -14,7 +14,6 @@ namespace Assignment2
 
     public partial class Assign2Form : Form
     {
-        public virtual event System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged;
         /*
          * Enum definitions
          */
