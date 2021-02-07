@@ -741,6 +741,7 @@ namespace Assignment2
             RaceBox.Items.Add("Forsakken");
         }
 
+        // Button to print the roster of a selected guild
         private void PrintGuildRoster_Click(object sender, EventArgs e)
         {
             bool noMembers = true;   
@@ -784,6 +785,7 @@ namespace Assignment2
             OutputBox.TopIndex = OutputBox.Items.Count - 1;
         }
 
+        // Button to disband a selected guild
         private void DisbandGuild_Click(object sender, EventArgs e)
         {
             // Check for a guilds selection, return if none
@@ -822,7 +824,7 @@ namespace Assignment2
             //adds a message saying that guild has been disbanded
             if (removed > 0)
                 OutputBox.Items.Add('\n');
-            OutputBox.Items.Add("The Guild " + Guilds[guildID].guildName + " [" + Guilds[guildID].serverName + "] has been successfuly disbanded");
+            OutputBox.Items.Add("The Guild " + Guilds[guildID].guildName + " [" + Guilds[guildID].serverName + "] has been successfuly disbanded.");
             OutputBox.Items.Add('\n');
             OutputBox.TopIndex = OutputBox.Items.Count - 1;
 
@@ -834,6 +836,7 @@ namespace Assignment2
             GuildBox.SelectedIndex = -1;
         }
 
+        // Button to join guild for selected player
         private void JoinGuild_Click(object sender, EventArgs e)
         {
             // Check for valid player and guild selections
@@ -879,6 +882,7 @@ namespace Assignment2
                 }        
         }
 
+        // Button to leave guild for selected player
         private void LeaveGuild_Click(object sender, EventArgs e)
         {
             // Check for valid player selection
@@ -1112,8 +1116,7 @@ namespace Assignment2
                 //Warrior case
                 case 0:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Tank");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Tank", "Dps" });
                     break;
 
                 //Mage case
@@ -1126,16 +1129,13 @@ namespace Assignment2
                 //Druid case
                 case 2:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Tank");
-                    RoleBox.Items.Add("Dps");
-                    RoleBox.Items.Add("Healer");
+                    RoleBox.Items.AddRange(new string[] { "Tank", "Healer", "Dps" });
                     break;
 
                 //Priest
                 case 3:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Healer");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Healer", "Dps" });
                     break;
 
                 //Warlock
@@ -1155,9 +1155,7 @@ namespace Assignment2
 
                 case 6:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Tank");
-                    RoleBox.Items.Add("Healer");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Tank", "Healer", "Dps" });
                     break;
 
                 //Hunter
@@ -1170,8 +1168,7 @@ namespace Assignment2
                 //Shaman
                 case 8:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Healer");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Healer", "Dps" });
                     break;
 
                 default:
