@@ -716,29 +716,14 @@ namespace Assignment2
             Servercombo.SelectedIndex = 0;
 
             //adds all the possible types of guilds to the dropdown box
-            GuildTypeBox.Items.Add("Casual");
-            GuildTypeBox.Items.Add("Questing");
-            GuildTypeBox.Items.Add("Mythic");
-            GuildTypeBox.Items.Add("Raiding");
-            GuildTypeBox.Items.Add("PVP");
+            GuildTypeBox.Items.AddRange(new string[] { "Casual", "Questing", "Mythic", "Raiding", "PVP" });
             GuildTypeBox.SelectedIndex = 0;
 
             //adding the classes to the class dropdown
-            ClassBox.Items.Add("Warrior");
-            ClassBox.Items.Add("Mage");
-            ClassBox.Items.Add("Druid");
-            ClassBox.Items.Add("Priest");
-            ClassBox.Items.Add("Warlock");
-            ClassBox.Items.Add("Rogue");
-            ClassBox.Items.Add("Paladin");
-            ClassBox.Items.Add("Hunter");
-            ClassBox.Items.Add("Shaman");
+            ClassBox.Items.AddRange(new string[] { "Warrior", "Mage", "Druid", "Priest", "Warlock", "Rogue", "Paladin", "Hunter", "Shaman" });
 
             //adding the races to the race dropdown
-            RaceBox.Items.Add("Orc");
-            RaceBox.Items.Add("Troll");
-            RaceBox.Items.Add("Tauren");
-            RaceBox.Items.Add("Forsakken");
+            RaceBox.Items.AddRange(new string[] { "Orc", "Troll", "Tauren", "Forsaken" });
         }
 
         // Button to print the roster of a selected guild
