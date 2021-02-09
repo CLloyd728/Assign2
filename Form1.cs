@@ -2,7 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
-
+/*
+ Cameron Lloyd, Bradley Graves
+ z1853137, z1853328
+ Assignment 2
+ CSCI 473
+ This file includes the classes made in assignment 1 and then further implements manipulation of those classes in the form of forms.
+ This form includes add and remove guilds as well as joining and leaving guilds. It prints out information about those two types of
+ objects and has a two types of searching availible. Also there has been added player classes as well as servers for the guilds
+ items are not really touched in this assignment.
+ */
 namespace Assignment2
 {
 
@@ -17,12 +26,14 @@ namespace Assignment2
             Wrist, Gloves, Belt, Pants, Boots,
             Ring, Trinket
         };
-
+        //enum for the races of characters.
         public enum Race { Orc, Troll, Tauren, Forsaken };
+        //an enum listing the types of classes a player can be in the proper order
         public enum PlayerClass
         {
             Warrior, Mage, Druid, Priest, Warlock, Rogue, Paladin, Hunter, Shaman
         };
+        //an enum for what type of guild it is
         public enum GuildType
         {
             Casual, Questing, Mythic, Raiding, PVP
@@ -83,7 +94,7 @@ namespace Assignment2
             return key;
         }
 
-        //finds the guild specified by the user
+        //finds the guild specified by the user via the name
         public static uint[] FindGuild(Dictionary<uint, Guild> Guilds, string gName)
         {
             //asks the user for the guild name   
@@ -689,6 +700,7 @@ namespace Assignment2
             public string guildName;
             public string serverName;
             public GuildType guildType;
+            //a guild class constuctor with a guildtype value of casual
             public Guild(string GuildName, string ServerName, GuildType Guildtype = 0)
             {
                 guildName = GuildName;
@@ -1019,7 +1031,7 @@ namespace Assignment2
             //creates the new player object and then adds it to the dictionary and then also adds it to the printing list.
             Players.Add(r, new Player(r, PlayerNameBox.Text.Trim(), (Race)RaceBox.SelectedIndex, (PlayerClass)ClassBox.SelectedIndex, 1, 0, 0, gear));
             PlayerBox.Items.Add(String.Format("{0} {1," + (27 - Players[r].Name.Length) + "} {2,3}", Players[r].Name, Players[r].Playerclass, Players[r].Level));
-
+            //then outputs the player info and then moves the output box
             OutputBox.Items.Add(PlayerNameBox.Text.Trim() + ", the " + (Race)RaceBox.SelectedIndex + " " + (PlayerClass)ClassBox.SelectedIndex + " has been created.");
             OutputBox.TopIndex = OutputBox.Items.Count - 1;
 
