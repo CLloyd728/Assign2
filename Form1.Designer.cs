@@ -31,10 +31,9 @@ namespace Assignment2
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Assign2Form));
             this.Label1 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.GuildBox = new System.Windows.Forms.ListBox();
+            this.PlayerBox = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.OutputBox = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -66,6 +65,7 @@ namespace Assignment2
             this.DisbandGuild = new System.Windows.Forms.Button();
             this.PrintGuildRoster = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.OutputBox = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -74,66 +74,57 @@ namespace Assignment2
             // Label1
             // 
             this.Label1.AutoSize = true;
-            this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(1324, 44);
+            this.Label1.Font = new System.Drawing.Font("Palatino Linotype", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label1.Location = new System.Drawing.Point(796, 71);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(63, 24);
+            this.Label1.Size = new System.Drawing.Size(89, 32);
             this.Label1.TabIndex = 2;
             this.Label1.Text = "Guilds";
             // 
-            // listBox1
+            // GuildBox
             // 
-            this.listBox1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 14;
-            this.listBox1.Location = new System.Drawing.Point(1328, 71);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.listBox1.Size = new System.Drawing.Size(298, 480);
-            this.listBox1.Sorted = true;
-            this.listBox1.TabIndex = 3;
+            this.GuildBox.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.GuildBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GuildBox.FormattingEnabled = true;
+            this.GuildBox.ItemHeight = 16;
+            this.GuildBox.Location = new System.Drawing.Point(796, 106);
+            this.GuildBox.Name = "GuildBox";
+            this.GuildBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.GuildBox.Size = new System.Drawing.Size(334, 452);
+            this.GuildBox.Sorted = true;
+            this.GuildBox.TabIndex = 3;
             // 
-            // listBox2
+            // PlayerBox
             // 
-            this.listBox2.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 16;
-            this.listBox2.Location = new System.Drawing.Point(1104, 71);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.listBox2.Size = new System.Drawing.Size(200, 484);
-            this.listBox2.Sorted = true;
-            this.listBox2.TabIndex = 4;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
+            this.PlayerBox.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.PlayerBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PlayerBox.FormattingEnabled = true;
+            this.PlayerBox.ItemHeight = 16;
+            this.PlayerBox.Location = new System.Drawing.Point(500, 106);
+            this.PlayerBox.Name = "PlayerBox";
+            this.PlayerBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.PlayerBox.Size = new System.Drawing.Size(265, 452);
+            this.PlayerBox.Sorted = true;
+            this.PlayerBox.TabIndex = 4;
+            this.PlayerBox.SelectedIndexChanged += new System.EventHandler(this.PlayerBox_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(1104, 44);
+            this.label2.Font = new System.Drawing.Font("Palatino Linotype", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(500, 71);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 24);
+            this.label2.Size = new System.Drawing.Size(93, 32);
             this.label2.TabIndex = 5;
             this.label2.Text = "Players";
-            // 
-            // OutputBox
-            // 
-            this.OutputBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OutputBox.FormattingEnabled = true;
-            this.OutputBox.ItemHeight = 14;
-            this.OutputBox.Location = new System.Drawing.Point(12, 668);
-            this.OutputBox.Name = "OutputBox";
-            this.OutputBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.OutputBox.Size = new System.Drawing.Size(1710, 172);
-            this.OutputBox.TabIndex = 6;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 645);
+            this.label3.Font = new System.Drawing.Font("Palatino Linotype", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(38, 579);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 20);
+            this.label3.Size = new System.Drawing.Size(95, 32);
             this.label3.TabIndex = 7;
             this.label3.Text = "Output";
             // 
@@ -147,10 +138,11 @@ namespace Assignment2
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.Servercombo);
             this.groupBox1.Controls.Add(this.AddGuild);
+            this.groupBox1.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(23, 418);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(437, 137);
+            this.groupBox1.Size = new System.Drawing.Size(437, 131);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Create New Guild";
@@ -158,9 +150,9 @@ namespace Assignment2
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(164, 78);
+            this.label15.Location = new System.Drawing.Point(14, 63);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(31, 13);
+            this.label15.Size = new System.Drawing.Size(38, 18);
             this.label15.TabIndex = 29;
             this.label15.Text = "Type";
             // 
@@ -169,7 +161,7 @@ namespace Assignment2
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(164, 16);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(38, 13);
+            this.label11.Size = new System.Drawing.Size(47, 18);
             this.label11.TabIndex = 26;
             this.label11.Text = "Server";
             // 
@@ -178,24 +170,26 @@ namespace Assignment2
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(12, 16);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(62, 13);
+            this.label13.Size = new System.Drawing.Size(81, 18);
             this.label13.TabIndex = 28;
             this.label13.Text = "Guild Name";
             // 
             // GuildNameBox
             // 
+            this.GuildNameBox.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.GuildNameBox.Location = new System.Drawing.Point(15, 35);
             this.GuildNameBox.Name = "GuildNameBox";
-            this.GuildNameBox.Size = new System.Drawing.Size(131, 20);
+            this.GuildNameBox.Size = new System.Drawing.Size(131, 25);
             this.GuildNameBox.TabIndex = 17;
             // 
             // GuildTypeBox
             // 
+            this.GuildTypeBox.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.GuildTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.GuildTypeBox.FormattingEnabled = true;
-            this.GuildTypeBox.Location = new System.Drawing.Point(167, 94);
+            this.GuildTypeBox.Location = new System.Drawing.Point(15, 84);
             this.GuildTypeBox.Name = "GuildTypeBox";
-            this.GuildTypeBox.Size = new System.Drawing.Size(131, 21);
+            this.GuildTypeBox.Size = new System.Drawing.Size(131, 26);
             this.GuildTypeBox.TabIndex = 21;
             // 
             // label9
@@ -203,18 +197,19 @@ namespace Assignment2
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(15, 16);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 13);
+            this.label9.Size = new System.Drawing.Size(44, 18);
             this.label9.TabIndex = 24;
             this.label9.Text = "label9";
             // 
             // Servercombo
             // 
+            this.Servercombo.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.Servercombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Servercombo.FormattingEnabled = true;
-            this.Servercombo.Location = new System.Drawing.Point(167, 35);
+            this.Servercombo.Location = new System.Drawing.Point(167, 34);
             this.Servercombo.MaxDropDownItems = 20;
             this.Servercombo.Name = "Servercombo";
-            this.Servercombo.Size = new System.Drawing.Size(131, 21);
+            this.Servercombo.Size = new System.Drawing.Size(131, 26);
             this.Servercombo.Sorted = true;
             this.Servercombo.TabIndex = 22;
             // 
@@ -239,6 +234,7 @@ namespace Assignment2
             this.groupBox2.Controls.Add(this.PlayerNameBox);
             this.groupBox2.Controls.Add(this.AddPlayer);
             this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(23, 275);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -252,35 +248,37 @@ namespace Assignment2
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(12, 73);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(32, 13);
+            this.label14.Size = new System.Drawing.Size(40, 18);
             this.label14.TabIndex = 29;
             this.label14.Text = "Class";
             // 
             // ClassBox
             // 
+            this.ClassBox.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.ClassBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ClassBox.FormattingEnabled = true;
-            this.ClassBox.Location = new System.Drawing.Point(15, 89);
+            this.ClassBox.Location = new System.Drawing.Point(15, 94);
             this.ClassBox.Name = "ClassBox";
-            this.ClassBox.Size = new System.Drawing.Size(131, 21);
+            this.ClassBox.Size = new System.Drawing.Size(131, 26);
             this.ClassBox.TabIndex = 25;
             this.ClassBox.SelectedIndexChanged += new System.EventHandler(this.ClassBox_SelectedIndexChanged);
             // 
             // RoleBox
             // 
+            this.RoleBox.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.RoleBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.RoleBox.FormattingEnabled = true;
-            this.RoleBox.Location = new System.Drawing.Point(167, 89);
+            this.RoleBox.Location = new System.Drawing.Point(167, 94);
             this.RoleBox.Name = "RoleBox";
-            this.RoleBox.Size = new System.Drawing.Size(131, 21);
+            this.RoleBox.Size = new System.Drawing.Size(131, 26);
             this.RoleBox.TabIndex = 24;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(164, 24);
+            this.label12.Location = new System.Drawing.Point(162, 24);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(33, 13);
+            this.label12.Size = new System.Drawing.Size(36, 18);
             this.label12.TabIndex = 27;
             this.label12.Text = "Race";
             // 
@@ -289,24 +287,26 @@ namespace Assignment2
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(164, 73);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 13);
+            this.label8.Size = new System.Drawing.Size(34, 18);
             this.label8.TabIndex = 23;
             this.label8.Text = "Role";
             // 
             // RaceBox
             // 
+            this.RaceBox.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.RaceBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.RaceBox.FormattingEnabled = true;
-            this.RaceBox.Location = new System.Drawing.Point(167, 40);
+            this.RaceBox.Location = new System.Drawing.Point(165, 42);
             this.RaceBox.Name = "RaceBox";
-            this.RaceBox.Size = new System.Drawing.Size(131, 21);
+            this.RaceBox.Size = new System.Drawing.Size(131, 26);
             this.RaceBox.TabIndex = 20;
             // 
             // PlayerNameBox
             // 
-            this.PlayerNameBox.Location = new System.Drawing.Point(15, 40);
+            this.PlayerNameBox.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.PlayerNameBox.Location = new System.Drawing.Point(15, 45);
             this.PlayerNameBox.Name = "PlayerNameBox";
-            this.PlayerNameBox.Size = new System.Drawing.Size(131, 20);
+            this.PlayerNameBox.Size = new System.Drawing.Size(131, 25);
             this.PlayerNameBox.TabIndex = 16;
             // 
             // AddPlayer
@@ -324,7 +324,7 @@ namespace Assignment2
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(12, 24);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(67, 13);
+            this.label6.Size = new System.Drawing.Size(86, 18);
             this.label6.TabIndex = 21;
             this.label6.Text = "Player Name";
             // 
@@ -339,6 +339,7 @@ namespace Assignment2
             this.groupBox3.Controls.Add(this.LeaveGuild);
             this.groupBox3.Controls.Add(this.DisbandGuild);
             this.groupBox3.Controls.Add(this.PrintGuildRoster);
+            this.groupBox3.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(23, 87);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -350,42 +351,44 @@ namespace Assignment2
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(188, 61);
+            this.label10.Location = new System.Drawing.Point(204, 94);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(122, 13);
+            this.label10.Size = new System.Drawing.Size(155, 18);
             this.label10.TabIndex = 25;
             this.label10.Text = "Search Guild (by Server)";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(188, 19);
+            this.label5.Location = new System.Drawing.Point(203, 33);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(124, 13);
+            this.label5.Size = new System.Drawing.Size(156, 18);
             this.label5.TabIndex = 20;
             this.label5.Text = "Search Player (by Name)";
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(191, 77);
+            this.textBox3.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.textBox3.Location = new System.Drawing.Point(216, 120);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(131, 20);
+            this.textBox3.Size = new System.Drawing.Size(131, 25);
             this.textBox3.TabIndex = 18;
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(191, 36);
+            this.textBox4.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.textBox4.Location = new System.Drawing.Point(216, 60);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(131, 20);
+            this.textBox4.Size = new System.Drawing.Size(131, 25);
             this.textBox4.TabIndex = 19;
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // JoinGuild
             // 
-            this.JoinGuild.Location = new System.Drawing.Point(6, 77);
+            this.JoinGuild.Location = new System.Drawing.Point(15, 84);
             this.JoinGuild.Name = "JoinGuild";
-            this.JoinGuild.Size = new System.Drawing.Size(151, 23);
+            this.JoinGuild.Size = new System.Drawing.Size(151, 25);
             this.JoinGuild.TabIndex = 12;
             this.JoinGuild.Text = "Join Guild";
             this.JoinGuild.UseVisualStyleBackColor = true;
@@ -393,7 +396,7 @@ namespace Assignment2
             // 
             // ApplySearchCriteria
             // 
-            this.ApplySearchCriteria.Location = new System.Drawing.Point(6, 135);
+            this.ApplySearchCriteria.Location = new System.Drawing.Point(15, 142);
             this.ApplySearchCriteria.Name = "ApplySearchCriteria";
             this.ApplySearchCriteria.Size = new System.Drawing.Size(151, 23);
             this.ApplySearchCriteria.TabIndex = 14;
@@ -403,7 +406,7 @@ namespace Assignment2
             // 
             // LeaveGuild
             // 
-            this.LeaveGuild.Location = new System.Drawing.Point(6, 106);
+            this.LeaveGuild.Location = new System.Drawing.Point(15, 113);
             this.LeaveGuild.Name = "LeaveGuild";
             this.LeaveGuild.Size = new System.Drawing.Size(151, 23);
             this.LeaveGuild.TabIndex = 13;
@@ -413,7 +416,7 @@ namespace Assignment2
             // 
             // DisbandGuild
             // 
-            this.DisbandGuild.Location = new System.Drawing.Point(6, 48);
+            this.DisbandGuild.Location = new System.Drawing.Point(15, 55);
             this.DisbandGuild.Name = "DisbandGuild";
             this.DisbandGuild.Size = new System.Drawing.Size(151, 23);
             this.DisbandGuild.TabIndex = 11;
@@ -423,7 +426,7 @@ namespace Assignment2
             // 
             // PrintGuildRoster
             // 
-            this.PrintGuildRoster.Location = new System.Drawing.Point(6, 19);
+            this.PrintGuildRoster.Location = new System.Drawing.Point(15, 26);
             this.PrintGuildRoster.Name = "PrintGuildRoster";
             this.PrintGuildRoster.Size = new System.Drawing.Size(151, 23);
             this.PrintGuildRoster.TabIndex = 10;
@@ -434,18 +437,34 @@ namespace Assignment2
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(485, 21);
+            this.label4.Font = new System.Drawing.Font("Palatino Linotype", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(284, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(575, 39);
+            this.label4.Size = new System.Drawing.Size(565, 47);
             this.label4.TabIndex = 0;
             this.label4.Text = "Player/Guild Management System";
+            // 
+            // OutputBox
+            // 
+            this.OutputBox.AllowDrop = true;
+            this.OutputBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.OutputBox.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.OutputBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OutputBox.FormattingEnabled = true;
+            this.OutputBox.ItemHeight = 14;
+            this.OutputBox.Location = new System.Drawing.Point(41, 632);
+            this.OutputBox.Name = "OutputBox";
+            this.OutputBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.OutputBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.OutputBox.Size = new System.Drawing.Size(1089, 172);
+            this.OutputBox.TabIndex = 6;
             // 
             // Assign2Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1734, 856);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.ClientSize = new System.Drawing.Size(1159, 826);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -453,8 +472,8 @@ namespace Assignment2
             this.Controls.Add(this.label3);
             this.Controls.Add(this.OutputBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listBox2);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.PlayerBox);
+            this.Controls.Add(this.GuildBox);
             this.Controls.Add(this.Label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Assign2Form";
@@ -473,10 +492,9 @@ namespace Assignment2
 
         #endregion
         private System.Windows.Forms.Label Label1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox GuildBox;
+        private System.Windows.Forms.ListBox PlayerBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox OutputBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label15;
@@ -508,5 +526,6 @@ namespace Assignment2
         private System.Windows.Forms.Button DisbandGuild;
         private System.Windows.Forms.Button PrintGuildRoster;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ListBox OutputBox;
     }
 }

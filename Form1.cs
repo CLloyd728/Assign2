@@ -1,11 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
@@ -520,7 +514,7 @@ namespace Assignment2
             public override String ToString()
             {
                 string message = "Name: " + String.Format("{0,-12}", _name) + "\tRace: " + _race + "\tLevel: " + _level;
-                return _guildID == 0 ? message : message + "\tGuild: " + Guilds[GuildID].guildName;
+                return _guildID == 0 ? message : message + "     Guild: " + Guilds[GuildID].guildName + " [" + Guilds[GuildID].serverName + "]";
 
             }
         }
@@ -704,87 +698,202 @@ namespace Assignment2
         }
         public Assign2Form()
         {
+            // Load GUI and data
             InitializeComponent();
             LoadData();
-            //prints out a list of guilds
+
+            //Prints out a list of guilds
             foreach (KeyValuePair<uint, Guild> pair in Guilds)
             {
-                listBox1.Items.Add(String.Format("{0} {1}", pair.Value.guildName, ("[" + pair.Value.serverName + "]").PadLeft(40 - pair.Value.guildName.Length)));
+                GuildBox.Items.Add(String.Format("{0} {1}", pair.Value.guildName, ("[" + pair.Value.serverName + "]").PadLeft(40 - pair.Value.guildName.Length)));
                 if (Servercombo.FindStringExact(pair.Value.serverName) == -1)
                     Servercombo.Items.Add(pair.Value.serverName);
             }
+
             //prints out a list of players
             foreach (KeyValuePair<uint, Player> pair in Players)
-                listBox2.Items.Add(String.Format("{0} {1," + (20 - pair.Value.Name.Length) + "} {2:00}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
+                PlayerBox.Items.Add(String.Format("{0} {1," + (27 - pair.Value.Name.Length) + "} {2,3}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
             Servercombo.SelectedIndex = 0;
+
             //adds all the possible types of guilds to the dropdown box
-            GuildTypeBox.Items.Add("Casual");
-            GuildTypeBox.Items.Add("Questing");
-            GuildTypeBox.Items.Add("Mythic");
-            GuildTypeBox.Items.Add("Raiding");
-            GuildTypeBox.Items.Add("PVP");
+            GuildTypeBox.Items.AddRange(new string[] { "Casual", "Questing", "Mythic", "Raiding", "PVP" });
             GuildTypeBox.SelectedIndex = 0;
+
             //adding the classes to the class dropdown
-            ClassBox.Items.Add("Warrior");
-            ClassBox.Items.Add("Mage");
-            ClassBox.Items.Add("Druid");
-            ClassBox.Items.Add("Priest");
-            ClassBox.Items.Add("Warlock");
-            ClassBox.Items.Add("Rogue");
-            ClassBox.Items.Add("Paladin");
-            ClassBox.Items.Add("Hunter");
-            ClassBox.Items.Add("Shaman");
+            ClassBox.Items.AddRange(new string[] { "Warrior", "Mage", "Druid", "Priest", "Warlock", "Rogue", "Paladin", "Hunter", "Shaman" });
+
             //adding the races to the race dropdown
-            RaceBox.Items.Add("Orc");
-            RaceBox.Items.Add("Troll");
-            RaceBox.Items.Add("Tauren");
-            RaceBox.Items.Add("Forsakken");
+            RaceBox.Items.AddRange(new string[] { "Orc", "Troll", "Tauren", "Forsaken" });
         }
 
+        // Button to print the roster of a selected guild
         private void PrintGuildRoster_Click(object sender, EventArgs e)
         {
-            int printed = 0;
+            bool noMembers = true;   
+
             // Check for a guilds selection, return if none
-            if (listBox1.SelectedIndex == -1)
+            if (GuildBox.SelectedIndex == -1)
+            {
+                OutputBox.Items.Add("Please select a guild from the list.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                return;
+            }         
+
+            // Get guild name and server selection from list
+            string[] nameMatch = GuildBox.SelectedItem.ToString().Split('[');
+            string[] serverMatch = nameMatch[1].Split(']');
+            OutputBox.Items.Add("Guild Listing for " + nameMatch[0].Trim() + " [" + nameMatch[1]);
+            OutputBox.Items.Add(new String('-', 70));
+            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+
+            // Check for valid match on guild name and server name
+            foreach (KeyValuePair<uint, Player> pair in Players)
+            {        
+                if (pair.Value.GuildID != 0)
+                    if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
+                    {
+                        OutputBox.Items.Add("Name: " + pair.Value.Name.PadRight(22, ' ') + "Race: " + Convert.ToString(pair.Value.Race).PadRight(15, ' ') + "Level: " + Convert.ToString(pair.Value.Level).PadRight(10, ' ') +
+                                            "Guild: " + Guilds[pair.Value.GuildID].guildName + " [" + Guilds[pair.Value.GuildID].serverName + "]");
+                        OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                        noMembers = false;                    
+                    }                                 
+            }
+
+            // If no members, print message
+            if (noMembers)
+            {
+                OutputBox.Items.Add("There are currently no members in " + nameMatch[0].Trim() + " [" + serverMatch[0].Trim() + "]");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+            }
+
+            OutputBox.Items.Add("\n");
+            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+        }
+
+        // Button to disband a selected guild
+        private void DisbandGuild_Click(object sender, EventArgs e)
+        {
+            // Check for a guilds selection, return if none
+            if (GuildBox.SelectedIndex == -1)
+            {
+                OutputBox.Items.Add("Please select a guild from the list.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                return;
+            }
+
+            //splits up the guild and server name from the selected item in listbox1
+            string[] nameMatch = GuildBox.SelectedItem.ToString().Split('[');
+            string[] serverMatch = nameMatch[1].Split(']');
+
+            uint removed = 0;
+            uint guildID = 0;
+            //finds the guild id based on the name and server name
+            foreach (KeyValuePair<uint, Guild> pair in Guilds)
+            {
+                if (pair.Value.guildName == nameMatch[0].Trim() && pair.Value.serverName == serverMatch[0])
+                {
+                    guildID = pair.Key;
+                }
+            }
+
+            // Check for valid match on guild name and server name match and then removes those players from the guild
+            foreach (KeyValuePair<uint, Player> pair in Players)
+                if (pair.Value.GuildID == guildID)
+                {
+                    OutputBox.Items.Add(pair.Value.Name + " has been removed from " + Guilds[pair.Value.GuildID].guildName + " [" + Guilds[pair.Value.GuildID].serverName + "]");
+                    OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                    pair.Value.GuildID = 0;
+                    removed++;
+                }
+
+            //adds a message saying that guild has been disbanded
+            if (removed > 0)
+                OutputBox.Items.Add('\n');
+            OutputBox.Items.Add("The Guild " + Guilds[guildID].guildName + " [" + Guilds[guildID].serverName + "] has been successfuly disbanded.");
+            OutputBox.Items.Add('\n');
+            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+
+
+            //removes the guild from the list and then the box where it is listed
+            if (guildID != 0)
+                Guilds.Remove(guildID);
+            GuildBox.Items.RemoveAt(GuildBox.SelectedIndex);
+            GuildBox.SelectedIndex = -1;
+        }
+
+        // Button to join guild for selected player
+        private void JoinGuild_Click(object sender, EventArgs e)
+        {
+            // Check for valid player and guild selections
+            if (PlayerBox.SelectedIndex == -1)
+            {
+                OutputBox.Items.Add("Please select a player from the list.");
+                return;
+            }
+            if (GuildBox.SelectedIndex == -1)
             {
                 OutputBox.Items.Add("Please select a guild from the list.");
                 return;
             }
-
-            string[] nameMatch = listBox1.SelectedItem.ToString().Split('[');
-            string[] serverMatch = nameMatch[1].Split(']');
-            OutputBox.Items.Add("Guild Listing for " + nameMatch[0].Trim() + "\t[" + nameMatch[1]);
-            OutputBox.Items.Add(new String('-', 70));
-
-            // Check for valid match on guild name and server name
-            foreach (KeyValuePair<uint, Player> pair in Players)
+            if (PlayerBox.Items.Count == 0 || GuildBox.Items.Count == 0)
             {
-                if (Guilds[pair.Value.GuildID].guildName == nameMatch[0].Trim() && Guilds[pair.Value.GuildID].serverName == serverMatch[0])
-                {
-                    OutputBox.Items.Add("Name: " + pair.Value.Name.PadRight(22, ' ') + "Race: " + Convert.ToString(pair.Value.Race).PadRight(15, ' ') + "Level: " + Convert.ToString(pair.Value.Level).PadRight(10, ' ') +
-                                        "Guild: " + Guilds[pair.Value.GuildID].guildName + "-" + Guilds[pair.Value.GuildID].serverName);
-                    printed++;                    
-                }                                 
+                OutputBox.Items.Add("Unable to join a guild at this time.");
+                return;
+            }
+            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+
+            // Get player name from list
+            string[] s = PlayerBox.SelectedItem.ToString().Split(' ');
+
+            // Find selected player object
+            uint player = FindPlayerName(Players, s[0]);
+
+            // Make sure player not already in guild
+            if (Players[player].GuildID != 0)
+            {
+                OutputBox.Items.Add(Players[player].Name + " is already in a guild and thus cannot join one.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                return;
             }
 
-            // If no members, print message
-            if (printed == 0)
-                OutputBox.Items.Add("There are currently no members in " + nameMatch[0].Trim() + "-" + serverMatch[0].Trim());
+            // Find selected guild object and set player guild id to selected guild id
+            s = GuildBox.SelectedItem.ToString().Split('[');
+            foreach(KeyValuePair<uint, Guild> pair2 in Guilds)
+                if (s[0].Trim() == pair2.Value.guildName)
+                {
+                    Players[player].GuildID = pair2.Key;
+                    OutputBox.Items.Add(Players[player].Name + " has successfuly joined " + pair2.Value.guildName + " [" + pair2.Value.serverName + "]!");
+                    OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                }        
         }
 
-        private void DisbandGuild_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("This button doesn't do anything yet.");
-        }
-
-        private void JoinGuild_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("This button doesn't do anything yet.");
-        }
-
+        // Button to leave guild for selected player
         private void LeaveGuild_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This button doesn't do anything yet.");
+            // Check for valid player selection
+            if (PlayerBox.SelectedIndex == -1)
+            {
+                OutputBox.Items.Add("Please select a player from the list.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                return;
+            }
+
+            // Get player name from list
+            string[] s = PlayerBox.SelectedItem.ToString().Split(' ');
+
+            // Find selected player object
+            uint player = FindPlayerName(Players, s[0]);
+
+            // Make sure player is in a guild
+            if (Players[player].GuildID == 0)
+            {
+                OutputBox.Items.Add(Players[player].Name + " is not in a guild and thus cannot leave one.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
+                return;
+            }
+           
+            OutputBox.Items.Add(Players[player].Name + " has left " + Guilds[(Players[player].GuildID)].guildName + " [" + Guilds[(Players[player].GuildID)].serverName + "].");
+            Players[player].GuildID = 0;
         }
 
         // Button to filter players and guilds
@@ -794,6 +903,7 @@ namespace Assignment2
             if (textBox4.Text == "" && textBox3.Text == "")
             { 
                 OutputBox.Items.Add("Please enter a search term to use this feature.");
+                OutputBox.TopIndex = OutputBox.Items.Count - 1;
                 return;
             }
 
@@ -803,36 +913,38 @@ namespace Assignment2
                 // Check for entry in player search term
                 if (textBox4.Text != "")
                 {
-                    listBox2.Items.Clear();
+                    PlayerBox.Items.Clear();
                     // Populate the list
                     foreach (KeyValuePair<uint, Player> pair1 in Players)
                         if (pair1.Value.Name.StartsWith(textBox4.Text[0].ToString()))
-                            listBox2.Items.Add(String.Format("{0} {1," + (20 - pair1.Value.Name.Length) + "} {2:00}", pair1.Value.Name, pair1.Value.Playerclass, pair1.Value.Level));                      
+                            PlayerBox.Items.Add(String.Format("{0} {1," + (27 - pair1.Value.Name.Length) + "} {2,3}", pair1.Value.Name, pair1.Value.Playerclass, pair1.Value.Level));
 
                     // If list is empty, reprint all players
-                    if (listBox2.Items.Count == 0)
+                    if (PlayerBox.Items.Count == 0)
                     {
                         OutputBox.Items.Add("No match was found for entered player " + textBox4.Text);
+                        OutputBox.TopIndex = OutputBox.Items.Count - 1;
                         foreach (KeyValuePair<uint, Player> pair2 in Players)
-                            listBox2.Items.Add(String.Format("{0} {1," + (20 - pair2.Value.Name.Length) + "} {2:00}", pair2.Value.Name, pair2.Value.Playerclass, pair2.Value.Level));
+                            PlayerBox.Items.Add(String.Format("{0} {1," + (27 - pair2.Value.Name.Length) + "} {2,3}", pair2.Value.Name, pair2.Value.Playerclass, pair2.Value.Level));
                     }
                 }
 
                 // Check for entry in guild search term
                 if (textBox3.Text != "")
                 {
-                    listBox1.Items.Clear();
+                    GuildBox.Items.Clear();
                     // Populate the list
                     foreach (KeyValuePair<uint, Guild> pair1 in Guilds)
                         if (pair1.Value.serverName == textBox3.Text)
-                            listBox1.Items.Add(String.Format("{0} {1}", pair1.Value.guildName, ("[" + pair1.Value.serverName + "]").PadLeft(40 - pair1.Value.guildName.Length)));
+                            GuildBox.Items.Add(String.Format("{0} {1}", pair1.Value.guildName, ("[" + pair1.Value.serverName + "]").PadLeft(40 - pair1.Value.guildName.Length)));
 
                     // If list is empty, reprint all guilds
-                    if (listBox1.Items.Count == 0)
+                    if (GuildBox.Items.Count == 0)
                     {
                         OutputBox.Items.Add("No match was found for entered server " + textBox3.Text);
+                        OutputBox.TopIndex = OutputBox.Items.Count - 1;
                         foreach (KeyValuePair<uint, Guild> pair2 in Guilds)
-                            listBox1.Items.Add(String.Format("{0} {1}", pair2.Value.guildName, ("[" + pair2.Value.serverName + "]").PadLeft(40 - pair2.Value.guildName.Length)));
+                            GuildBox.Items.Add(String.Format("{0} {1}", pair2.Value.guildName, ("[" + pair2.Value.serverName + "]").PadLeft(40 - pair2.Value.guildName.Length)));
                     }
                 }
             }
@@ -842,9 +954,9 @@ namespace Assignment2
         {
             if (textBox4.Text == "")
             {
-                listBox2.Items.Clear();
+                PlayerBox.Items.Clear();
                 foreach (KeyValuePair<uint, Player> pair in Players)
-                    listBox2.Items.Add(String.Format("{0} {1," + (20 - pair.Value.Name.Length) + "} {2:00}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
+                    PlayerBox.Items.Add(String.Format("{0} {1," + (27 - pair.Value.Name.Length) + "} {2,3}", pair.Value.Name, pair.Value.Playerclass, pair.Value.Level));
             }
 
         }
@@ -853,9 +965,9 @@ namespace Assignment2
         {
             if (textBox3.Text == "")
             {
-                listBox1.Items.Clear();
+                GuildBox.Items.Clear();
                 foreach (KeyValuePair<uint, Guild> pair in Guilds)
-                    listBox1.Items.Add(String.Format("{0} {1}", pair.Value.guildName, ("[" + pair.Value.serverName + "]").PadLeft(40 - pair.Value.guildName.Length)));
+                    GuildBox.Items.Add(String.Format("{0} {1}", pair.Value.guildName, ("[" + pair.Value.serverName + "]").PadLeft(40 - pair.Value.guildName.Length)));
             }
         }
                  
@@ -883,27 +995,35 @@ namespace Assignment2
                 MessageBox.Show("Please select a Role.");
                 return;
             }
+
             //checks to see if the player name is taken if so makes them change it
             if (FindPlayerName(Players, PlayerNameBox.Text.Trim()) != 2147483647)
             {
                 MessageBox.Show("A player with that name already exists, please try another one.");
                 return;
             }
+
             //creates a random key to assign the guild
             Random generator = new Random();
             uint r = (uint)generator.Next(0, 999999);
+
             //if it manages to get a key that already exists it trys again
             while (Players.ContainsKey(r))
                 r = (uint)generator.Next(0, 999999);
+
             //makes an empty gear array for the constructor
-            uint[] gear;
-            gear = new uint[MAX_INVENTORY_SIZE];
+            uint[] gear = new uint[MAX_INVENTORY_SIZE];
             for (int i = 0; i < MAX_INVENTORY_SIZE; i++)
                 gear[i] = 0;
+
             //creates the new player object and then adds it to the dictionary and then also adds it to the printing list.
             Players.Add(r, new Player(r, PlayerNameBox.Text.Trim(), (Race)RaceBox.SelectedIndex, (PlayerClass)ClassBox.SelectedIndex, 1, 0, 0, gear));
-            listBox2.Items.Add(String.Format("{0} {1," + (20 - Players[r].Name.Length) + "} {2:00}", Players[r].Name, Players[r].Playerclass, Players[r].Level));
-            //resets all the fields
+            PlayerBox.Items.Add(String.Format("{0} {1," + (27 - Players[r].Name.Length) + "} {2,3}", Players[r].Name, Players[r].Playerclass, Players[r].Level));
+
+            OutputBox.Items.Add(PlayerNameBox.Text.Trim() + ", the " + (Race)RaceBox.SelectedIndex + " " + (PlayerClass)ClassBox.SelectedIndex + " has been created.");
+            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+
+            //resets all the field
             PlayerNameBox.Clear();
             RoleBox.SelectedIndex = -1;
             RaceBox.SelectedIndex = -1;
@@ -914,6 +1034,7 @@ namespace Assignment2
         {
             //asks the user for the Player name   
             uint key = 2147483647;
+
             //searches the guild list for a Player by name
             foreach (KeyValuePair<uint, Player> pair in Players)
             {
@@ -943,6 +1064,7 @@ namespace Assignment2
                 MessageBox.Show("Please enter a guild name.");
                 return;
             }
+
             //checks to see if the guild name already exists
             uint[] temp = FindGuild(Guilds, GuildNameBox.Text);
             for (uint i = 0; temp[i] != 2147483647; i++)
@@ -958,17 +1080,20 @@ namespace Assignment2
             //creates a random key to assign the guild
             Random generator = new Random();
             uint r = (uint)generator.Next(0, 999999);
+
             //if it manages to get a key that already exists it trys again
             while (Guilds.ContainsKey(r))
                 r = (uint)generator.Next(0, 999999);
+
             //adds the guild to the guild list and then adds it to the printed guild list.
             Guilds.Add(r, new Guild(GuildNameBox.Text.Trim(), Servercombo.Text, (GuildType)GuildTypeBox.SelectedIndex));
-            listBox1.Items.Add(String.Format("{0} {1}", Guilds[r].guildName, ("[" + Guilds[r].serverName + "]").PadLeft(40 - Guilds[r].guildName.Length)));
+            GuildBox.Items.Add(String.Format("{0} {1}", Guilds[r].guildName, ("[" + Guilds[r].serverName + "]").PadLeft(40 - Guilds[r].guildName.Length)));
             GuildNameBox.Clear();
             Servercombo.SelectedIndex = 0;
             GuildTypeBox.SelectedIndex = 0;
         }
 
+        // Adds role selections to role selection box based on selected class
         private void ClassBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (ClassBox.SelectedIndex)
@@ -976,28 +1101,28 @@ namespace Assignment2
                 //Warrior case
                 case 0:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Tank");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Tank", "Dps" });
                     break;
+
                 //Mage case
                 case 1:
                     RoleBox.Items.Clear();
                     RoleBox.Items.Add("Dps");
                     RoleBox.SelectedIndex = 0;
                     break;
+
                 //Druid case
                 case 2:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Tank");
-                    RoleBox.Items.Add("Dps");
-                    RoleBox.Items.Add("Healer");
+                    RoleBox.Items.AddRange(new string[] { "Tank", "Healer", "Dps" });
                     break;
+
                 //Priest
                 case 3:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Healer");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Healer", "Dps" });
                     break;
+
                 //Warlock
                 case 4:
                     RoleBox.Items.Clear();
@@ -1005,40 +1130,44 @@ namespace Assignment2
                     RoleBox.SelectedIndex = 0;
                     break;
                 //Rogue
+
                 case 5:
                     RoleBox.Items.Clear();
                     RoleBox.Items.Add("Dps");
                     RoleBox.SelectedIndex = 0;
                     break;
                 //Paladin
+
                 case 6:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Tank");
-                    RoleBox.Items.Add("Healer");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Tank", "Healer", "Dps" });
                     break;
+
                 //Hunter
                 case 7:
                     RoleBox.Items.Clear();
                     RoleBox.Items.Add("Dps");
                     RoleBox.SelectedIndex = 0;
                     break;
+
                 //Shaman
                 case 8:
                     RoleBox.Items.Clear();
-                    RoleBox.Items.Add("Healer");
-                    RoleBox.Items.Add("Dps");
+                    RoleBox.Items.AddRange(new string[] { "Healer", "Dps" });
                     break;
+
                 default:
                     break;
             }
         }
 
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        // Prints info about the selected player
+        private void PlayerBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string[] s = listBox2.SelectedItem.ToString().Split(' ');
+            string[] s = PlayerBox.SelectedItem.ToString().Split(' ');
             uint key = FindPlayerName(Players, s[0]);
             OutputBox.Items.Add(Players[key]);
-        }    
+            OutputBox.TopIndex = OutputBox.Items.Count - 1;
+        }
     }
 }
