@@ -29,7 +29,6 @@ namespace Assignment2
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Assign2Form));
             this.Label1 = new System.Windows.Forms.Label();
             this.GuildBox = new System.Windows.Forms.ListBox();
             this.PlayerBox = new System.Windows.Forms.ListBox();
@@ -463,7 +462,7 @@ namespace Assignment2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.BackColor = System.Drawing.Color.DarkCyan;
             this.ClientSize = new System.Drawing.Size(1159, 826);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox3);
@@ -475,7 +474,6 @@ namespace Assignment2
             this.Controls.Add(this.PlayerBox);
             this.Controls.Add(this.GuildBox);
             this.Controls.Add(this.Label1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Assign2Form";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.Text = "World of ConflictCraft";
